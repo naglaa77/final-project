@@ -1,7 +1,7 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap"); */
 
 .nav-buttons {
-  margin-left: 60%;
+  margin-left: 55%;
 }
 * {
   padding: 0;
@@ -50,12 +50,22 @@ button {
 button:hover {
   background-color: coral;
 }
+.logo {
+  width: 40px;
+  height: 40px;
+}
 .navbar {
   font-size: 16px;
   padding-top: 2rem !important;
   padding-bottom: 2rem !important;
   top: 0;
   left: 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.navbar .brand {
+  color: coral;
+  margin: 3px 5px;
+  font-size: 1.5rem;
 }
 .navbar .navbar-nav .nav-link {
   padding: 0 20px;
@@ -206,7 +216,10 @@ hr {
   align-items: flex-start;
 }
 #banner h1 {
-  color: #f06f45;
+  color: #fff;
+}
+#banner h4 {
+  color: #fff;
 }
 #banner button {
   background-color: #88290a;
@@ -215,3 +228,75 @@ hr {
   background-color: #000;
 }
 /*End Bannar section*/
+
+/*start footer*/
+footer {
+  background-color: #222222;
+}
+footer h5 {
+  color: #d8d8d8;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+footer ul li {
+  padding-bottom: 4px;
+}
+footer ul li a {
+  font-size: 0.8rem;
+  color: #999;
+  text-decoration: none;
+}
+footer ul li a:hover {
+  color: #d8d8d8;
+}
+footer .copyright a {
+  color: #000;
+  height: 40px;
+  width: 40px;
+  background-color: #fff;
+  display: inline-block;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 38px;
+  transition: 0.3s ease;
+  margin: 0 5px;
+}
+footer .copyright a:hover {
+  color: #fff;
+  background-color: #f06f45;
+}
+footer p {
+  color: #fff;
+}
+footer .copyright img {
+  width: 40%;
+}
+
+/********************************single product page*************/
+
+.small-img-group {
+  display: flex;
+  justify-content: space-between;
+}
+.small-img-col {
+  flex-basis: 24%;
+  cursor: pointer;
+}
+.single-product input {
+  width: 50px;
+  height: 40px;
+  padding-left: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+.single-product input:focus {
+  outline: none;
+}
+.single-product .buy-btn {
+  background-color: #fb774b;
+  opacity: 1;
+  transition: 0.4s all;
+}
+.single-product .buy-btn:hover {
+  background-color: #222;
+}
