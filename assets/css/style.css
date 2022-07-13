@@ -431,3 +431,31 @@ th:last-child {
   text-decoration: none;
 }
 /*End account page*/
+
+/*Start orders part*/
+
+.orders table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.orders .product-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+.orders th {
+  text-align: left;
+  padding: 5px 10px;
+  color: #fff;
+  background-color: #fb774b;
+}
+.orders th:nth-child(2) {
+  text-align: right;
+}
+.orders td {
+  padding: 10px 20px;
+}
+.orders img {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
