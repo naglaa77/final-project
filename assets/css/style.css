@@ -459,3 +459,24 @@ th:last-child {
   height: 80px;
   margin-right: 10px;
 }
+
+/* start Checkout*/
+
+#checkout-form .checkout-small-element {
+  display: inline-block;
+  width: 48%;
+  margin: 10px auto;
+}
+#checkout-form .checkout-large-element {
+  width: 97%;
+}
+#checkout-form .checkout-btn-container {
+  text-align: right;
+  margin: 10px;
+  margin-right: 40px;
+}
+#checkout-form #checkout-btn {
+  color: #fff;
+  background-color: #fb774b;
+}
+/*End checkout*/
