@@ -480,3 +480,9 @@ th:last-child {
   background-color: #fb774b;
 }
 /*End checkout*/
+
+/* Start Contact*/
+#contact span {
+  color: #fb774b;
+}
+/*End Contact*/
