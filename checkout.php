@@ -1,3 +1,26 @@
+<?php
+
+session_start();
+
+// confirm the user has product  and come from page checkout
+if (!empty($SESSION['cart']) && isset($_POST['checkout'])) {
+
+    // let user in
+  
+
+// send user to home page
+}else {
+
+header('location:index.php');
+
+}
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -66,99 +89,84 @@
     </nav>
     <!--End nav-->
 
-    <!--Start Cart section-->
-    <section class="cart container my-5 py-5">
-      <div class="container mt-5">
-        <h2 class="font-weight-bold">Your Cart</h2>
-        <hr />
-        <table class="mt-5 pt-5">
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-          <tr>
-            <td>
-              <div class="product-info">
-                <img src="assets/imgs/featured1.jpeg" alt="" />
-                <div>
-                  <p>white Shoes</p>
-                  <small><span>$</span>155</small>
-                  <br />
-                  <a class="remove-btn" href="#">Remove</a>
-                </div>
-              </div>
-            </td>
-            <td>
-              <input type="number" value="1" />
-              <a class="edit-btn" href="">Edit</a>
-            </td>
-            <td>
-              <span>$</span>
-              <span class="product-price">155</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="product-info">
-                <img src="assets/imgs/featured1.jpeg" alt="" />
-                <div>
-                  <p>white Shoes</p>
-                  <small><span>$</span>155</small>
-                  <br />
-                  <a class="remove-btn" href="#">Remove</a>
-                </div>
-              </div>
-            </td>
-            <td>
-              <input type="number" value="1" />
-              <a class="edit-btn" href="">Edit</a>
-            </td>
-            <td>
-              <span>$</span>
-              <span class="product-price">155</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="product-info">
-                <img src="assets/imgs/featured1.jpeg" alt="" />
-                <div>
-                  <p>white Shoes</p>
-                  <small><span>$</span>155</small>
-                  <br />
-                  <a class="remove-btn" href="#">Remove</a>
-                </div>
-              </div>
-            </td>
-            <td>
-              <input type="number" value="1" />
-              <a class="edit-btn" href="">Edit</a>
-            </td>
-            <td>
-              <span>$</span>
-              <span class="product-price">155</span>
-            </td>
-          </tr>
-        </table>
-        <div class="cart-total">
-          <table>
-            <tr>
-              <td>Subtitle</td>
-              <td>$155</td>
-            </tr>
-            <tr>
-              <td>Total</td>
-              <td>$155</td>
-            </tr>
-          </table>
-        </div>
+    <!--Start Checkout-->
+    <section class="my-5 py-5">
+      <div class="container text-center mt-3 pt-5">
+        <h2 class="form-weight-bold">Check Out</h2>
+        <hr class="mx-auto" />
       </div>
-      <div class="checkout-container">
-        <button class="btn checkout-btn">Checkout</button>
+      <div class="mx-auto container">
+        <form id="checkout-form" action="place_order.php" method="post">
+          <div class="form-group checkout-small-element">
+            <label for="">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="checkout-name"
+              name="name"
+              placeholder="Name"
+              required
+            />
+          </div>
+          <div class="form-group checkout-small-element">
+            <label for="">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="checkout-email"
+              name="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div class="form-group checkout-small-element">
+            <label for="">Phone</label>
+            <input
+              type="tel"
+              class="form-control"
+              id="checkout-phone"
+              name="phone"
+              placeholder="Phone"
+              required
+            />
+          </div>
+          <div class="form-group checkout-small-element">
+            <label for="">City</label>
+            <input
+              type="text"
+              class="form-control"
+              id="checkout-city"
+              name="city"
+              placeholder="City"
+              required
+            />
+          </div>
+          <div class="form-group checkout-large-element">
+            <label for="">Address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="checkout-address"
+              name="address"
+              placeholder="Address"
+              required
+            />
+          </div>
+          <div class="form-group checkout-btn-container">
+            <input
+              type="submit"
+              class="btn"
+              id="checkout-btn"
+              value="Place Order"
+              name="place_order"
+            />
+          </div>
+        </form>
       </div>
     </section>
-    <!--End Cart section-->
+
+    <!--End Checkout-->
+
     <!--Footer-->
     <footer class="mt-5 py-5">
       <div class="row container mx-auto pt-5">
@@ -238,6 +246,7 @@
         </div>
       </div>
     </footer>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
