@@ -1,3 +1,82 @@
+<?php
+
+session_start();
+
+include ('server/connection.php');
+
+
+if (isset($_POST['register'])) {
+    
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $confirmPassword = $_POST['confirmpassword'];
+
+  // if password not match
+  if ($password !== $confirmPassword) {
+    
+    header("location: register.php?error=passwords dont match");
+
+  // if password less than 6 char
+
+} else if(strlen ($password < 6)) {
+  
+    header("location: register.php?error=password must be at least  6 characters");
+
+// ifthere is no error
+} else {
+// we check if user has account or not
+
+$stmt1 = $conn->prepare("SELECT count(*) FROM users where user_email=?");
+
+$stmt1->bind_param('s',$email);
+$stmt1->execute();
+$stmt1->bind_result($num_rows);
+$stmt1->store_result();// without it code not work
+$stmt1->fetch();
+
+
+// if there is user alrady register with email
+if ($num_rows != 0) {
+
+  header("location: register.php?error=user with this email already exist");
+
+}else { // if no user register with yhis email
+
+//create a user
+    $stmt = $conn->prepare("INSERT INTO USERS (user_name, user_email, user_password)
+
+                    VALUES (?,?,?);");
+    $stmt->bind_param('sss',$name,$email,md5($password));
+
+    
+    // if account was created successfully
+    if ($stmt->execute()) {
+
+        $_SESSION['user_email'] = $email;
+        $_SESSION['user_name'] = $name;
+        $_SESSION['logged_in'] = true;
+        header('location: account.php?register:You registerd successfully'); 
+
+      // if account could not created
+    }else {
+
+    header('location: register.php?error=could not craete an account at the moment');
+    
+      }
+    }
+    
+  }
+
+}
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -73,7 +152,8 @@
         <hr class="mx-auto" />
       </div>
       <div class="mx-auto container">
-        <form id="register-form" action="">
+        <p style = "color: red;"><?php if (isset($_GET['error'])) {echo $_GET['error'];}?></p>
+        <form id="register-form" method="post" action="register.php">
           <div class="form-group">
             <label for="">Name</label>
             <input
@@ -124,6 +204,7 @@
               class="btn"
               id="register-btn"
               value="Register"
+              name="register"
             />
           </div>
           <div class="form-group">
