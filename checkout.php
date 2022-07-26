@@ -11,7 +11,7 @@ if (!empty($SESSION['cart']) && isset($_POST['checkout'])) {
 // send user to home page
 }else {
 
-header('location:index.php');
+//header('location:index.php');
 
 }
 
@@ -69,7 +69,7 @@ header('location:index.php');
               <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="shop.html">Shop</a>
+              <a class="nav-link" href="shop.php">Shop</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Blog</a>
@@ -78,7 +78,7 @@ header('location:index.php');
               <a class="nav-link" href="contact.html">Contact Us</a>
             </li>
             <li class="nav-item">
-              <a href="cart.html"
+              <a href="cart.php"
                 ><i class="fa-solid fa-basket-shopping"></i
               ></a>
               <a href="account.html"><i class="fa-solid fa-user"></i></a>
@@ -96,7 +96,7 @@ header('location:index.php');
         <hr class="mx-auto" />
       </div>
       <div class="mx-auto container">
-        <form id="checkout-form" action="place_order.php" method="post">
+        <form id="checkout-form" action="server/place_order.php" method="post">
           <div class="form-group checkout-small-element">
             <label for="">Name</label>
             <input
@@ -147,12 +147,13 @@ header('location:index.php');
               type="text"
               class="form-control"
               id="checkout-address"
-              name="address"
+              name="adress"
               placeholder="Address"
               required
             />
           </div>
           <div class="form-group checkout-btn-container">
+            <p>Total amount: $<?php echo $_SESSION['total'] ;?></p>
             <input
               type="submit"
               class="btn"
