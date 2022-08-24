@@ -3,7 +3,12 @@
 session_start();
 
 include ('server/connection.php');
-
+  // if user has already registerd then take user to account page
+if (isset($_SESSION['logged_in'])) {
+    
+    header('location: account.php');
+    exit;
+}
 
 if (isset($_POST['register'])) {
     
@@ -52,11 +57,12 @@ if ($num_rows != 0) {
     
     // if account was created successfully
     if ($stmt->execute()) {
-
+        $user_id = $stmt->insert_id; //Returns the value generated for an AUTO_INCREMENT column by the last query
+        $_SESSION['user_id'] = $user_id;
         $_SESSION['user_email'] = $email;
         $_SESSION['user_name'] = $name;
         $_SESSION['logged_in'] = true;
-        header('location: account.php?register:You registerd successfully'); 
+        header('location: account.php?register_success=You registerd successfully'); 
 
       // if account could not created
     }else {
@@ -67,8 +73,8 @@ if ($num_rows != 0) {
     }
     
   }
-
 }
+
 ?>
 
 
@@ -208,7 +214,7 @@ if ($num_rows != 0) {
             />
           </div>
           <div class="form-group">
-            <a id="login-url" class="btn" href=""
+            <a id="login-url" class="btn" href="login.php"
               >do you have an account? Login</a
             >
           </div>

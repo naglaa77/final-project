@@ -52,11 +52,11 @@
               <a class="nav-link" href="#">Blog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
+              <a class="nav-link" href="contact.php">Contact Us</a>
             </li>
             <li class="nav-item">
               <a href="cart.php"><i class="fa-solid fa-basket-shopping"></i></a>
-              <a href="account.html"><i class="fa-solid fa-user"></i></a>
+              <a href="account.php"><i class="fa-solid fa-user"></i></a>
             </li>
           </ul>
         </div>
@@ -64,49 +64,18 @@
     </nav>
     <!--End nav-->
 
-    <!--Strat login -->
-    <section class="my-5 py-5">
-      <div class="container text-center mt-3 pt-5">
-        <h2 class="form-weight-bold">Login</h2>
+    <!--Start Contact-->
+    <section id="contact" class="container my-5 py-5">
+      <div class="container text-center mt-5">
+        <h3>Contact Us</h3>
         <hr class="mx-auto" />
-      </div>
-      <div class="mx-auto container">
-        <form id="login-form" action="">
-          <div class="form-group">
-            <label for="">Email</label>
-            <input
-              type="text"
-              class="form-control"
-              id="login-email"
-              name="email"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="login-password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input type="submit" class="btn" id="login-btn" value="login" />
-          </div>
-          <div class="form-group">
-            <a id="register-url" class="btn" href=""
-              >Don't have account? Register</a
-            >
-          </div>
-        </form>
+        <p class="w-50 mx-auto">Phone number: <span>123 564 963</span></p>
+        <p class="w-50 mx-auto">Email address: <span>info@email.com</span></p>
+        <p class="w-50 mx-auto">We work 24/7 to answer your questions</p>
       </div>
     </section>
+    <!--End Contact-->
 
-    <!--End login -->
     <!--Footer-->
     <footer class="mt-5 py-5">
       <div class="row container mx-auto pt-5">

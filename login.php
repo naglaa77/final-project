@@ -1,3 +1,54 @@
+<?php 
+
+session_start();
+include('server/connection.php');
+
+if (isset($_SESSION['logged_in'])) {
+  header('location:account.php');
+  exit;
+}
+
+if (isset($_POST['login_btn'])) {
+
+    $email = $_POST['email'];
+    $password = md5($_POST['password']); // password _hash, password_verify
+
+    $stmt = $conn->prepare("SELECT user_id,user_name,user_email,user_password FROM users WHERE user_email=? AND user_password=? LIMIT 1");
+
+    $stmt->bind_param('ss',$email,$password);
+
+  if($stmt->execute()) {
+
+      $stmt->bind_result($user_id,$username,$user_email,$user_password);
+      $stmt->store_result();
+
+        if ($stmt->num_rows() == 1) {
+
+          $stmt->fetch();
+
+          // save all data in session
+          $_SESSION['user_id'] = $user_id;
+          $_SESSION['user_name'] = $user_name;
+          $_SESSION['user_email'] = $user_email;
+          $_SESSION['login_in'] = true;
+
+          header('location: account.php?message=logged in successfully');
+
+        }else {
+          //error
+          header('location: login.php?error=something went wrong');
+        
+        }
+
+    } else {
+      
+      header('location: login.php?error=something went wrong');
+
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,11 +103,11 @@
               <a class="nav-link" href="#">Blog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
+              <a class="nav-link" href="contact.php">Contact Us</a>
             </li>
             <li class="nav-item">
               <a href="cart.php"><i class="fa-solid fa-basket-shopping"></i></a>
-              <a href="account.html"><i class="fa-solid fa-user"></i></a>
+              <a href="account.php"><i class="fa-solid fa-user"></i></a>
             </li>
           </ul>
         </div>
@@ -64,18 +115,50 @@
     </nav>
     <!--End nav-->
 
-    <!--Start Contact-->
-    <section id="contact" class="container my-5 py-5">
-      <div class="container text-center mt-5">
-        <h3>Contact Us</h3>
+    <!--Strat login -->
+    <section class="my-5 py-5">
+      <div class="container text-center mt-3 pt-5">
+        <h2 class="form-weight-bold">Login</h2>
         <hr class="mx-auto" />
-        <p class="w-50 mx-auto">Phone number: <span>123 564 963</span></p>
-        <p class="w-50 mx-auto">Email address: <span>info@email.com</span></p>
-        <p class="w-50 mx-auto">We work 24/7 to answer your questions</p>
+      </div>
+      <div class="mx-auto container">
+        <p style="color:red" class="text-center"> <?php if(isset($_GET['error'])) {echo $_GET['error'];}?></p>
+        <form id="login-form" method="post" action="login.php">
+          <div class="form-group">
+            <label for="">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="login-email"
+              name="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="login-password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn" id="login-btn" name="login_btn" value="login" />
+          </div>
+          <div class="form-group">
+            <a id="register-url" class="btn" href="register.php"
+              >Don't have account? Register</a
+            >
+          </div>
+        </form>
       </div>
     </section>
-    <!--End Contact-->
 
+    <!--End login -->
     <!--Footer-->
     <footer class="mt-5 py-5">
       <div class="row container mx-auto pt-5">

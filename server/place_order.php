@@ -13,7 +13,8 @@ if (isset($_POST['place_order'])) {
     $adress = $_POST['adress'];
     $order_cost = $_SESSION['total'];
     $order_status = "on_hold";
-    $user_id = 1;
+    //$user_id = 1; i use this for test in the begging after that i use this
+    $user_id = $_SESSION['user_id']; // yhis is comming from login page
     $order_date = date('Y-m-d H-i-s');
 
    $stmt =  $conn->prepare("INSERT INTO orders (order_cost,order_status,user_id,user_phone,user_city,user_address,order_date)

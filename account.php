@@ -1,3 +1,73 @@
+<?php
+//for sure that user is login
+session_start();
+include('server/connection.php');
+
+if(!isset($_SESSION['logged_in'])) {
+  header('location: login.php');
+  exit;
+}
+
+if (isset($_GET['logout'])) {
+  if (isset($_SESSION['logged_in'])) {
+    unset($_SESSION['logged_in']);
+    unset($_SESSION['user_email']);
+    unset($_SESSION['user_name']);
+    header('location: login.php');
+    exit;
+
+  }
+}
+
+if (isset($_POST['change_password'])) {
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirmPassword'];
+    $user_email = $_SESSION['user_email'];
+    if ($password !== $confirmPassword) {
+        
+        header("location: account.php?error=passwords dont match");
+
+      // if password less than 6 char
+
+    } else if(strlen($password < 6)) {
+      
+        header("location: account.php?error=password must be at least  6 characters");
+    } else {
+  
+      $stmt = $conn->prepare("UPDATE users SET user_password=? WHERE user_email=?");
+        $stmt->bind_param('ss',md5($password) ,$user_email);
+
+      if ($stmt->execute()) {
+
+          header('location: account.php?message=passsword has been updated successfully');
+      
+    } else {
+
+          header('location: account.php?error=passsword has not been updated');
+
+    }
+ }
+}
+
+//gets order
+
+if ($_SESSION['logged_in']) {
+  
+  $user_id = $_SESSION['user_id'];
+  $stmt = $conn->prepare("SELECT * FROM orders where user_id = ?");
+  $stmt->bind_param('i',$user_id);
+  $stmt->execute();
+  $orders = $stmt->get_result(); // this give an array of orders
+
+
+}
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,17 +116,17 @@
               <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="shop.html">Shop</a>
+              <a class="nav-link" href="shop.php">Shop</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Blog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
+              <a class="nav-link" href="contact.php">Contact Us</a>
             </li>
             <li class="nav-item">
               <a href="cart.php"><i class="fa-solid fa-basket-shopping"></i></a>
-              <a href="account.html"><i class="fa-solid fa-user"></i></a>
+              <a href="account.php"><i class="fa-solid fa-user"></i></a>
             </li>
           </ul>
         </div>
@@ -68,17 +138,22 @@
     <section class="my-5 py-5">
       <div class="row container">
         <div class="text-center mt-3 pt-5 col-lg-6 col-md-12 col-sm-12">
+        <p class="text-center" style="color: green;"> <?php if (isset($_GET['register_success'])) { echo $_GET['register_success'];}?> </?>
+        <p class="text-center" style="color: green;"> <?php if (isset($_GET['loggin_success'])) { echo $_GET['loggin_success'];}?> </?>
+
           <h3 class="font-weight-bold">Account info</h3>
           <hr class="mx-auto" />
           <div class="account-info">
-            <p>Name <span>Jonh</span></p>
-            <p>Email <span>jonh$email.com</span></p>
-            <p><a href="" id="order-btn"> Your orders</a></p>
-            <p><a href="" id="logout-btn">Logout</a></p>
+            <p>Name <span><?php if (isset($_SESSION['user_name'])) { echo $_SESSION['user_name'];}?></span></p>
+            <p>Email <span><?php if (isset($_SESSION['user_email'])) { echo $_SESSION['user_email'];}?></span></p>
+            <p><a href="#orders " id="order-btn"> Your orders</a></p>
+            <p><a href="account.php?logout=1" id="logout-btn">Logout</a></p>
           </div>
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12">
-          <form id="account-form" action="">
+          <form id="account-form" method="post" action="account.php">
+            <p class="text-center" style="color: red;"> <?php if (isset($_GET['error'])) { echo $_GET['error'];}?> </?>
+            <p class="text-center" style="color: green;"> <?php if (isset($_GET['message'])) { echo $_GET['message'];}?> </?>
             <h3>Change Password</h3>
             <hr class="mx-auto" />
             <div class="form-group">
@@ -106,7 +181,7 @@
             <div class="form-group">
               <input
                 type="submit"
-                name=""
+                name="change_password"
                 id="change-pass-btn"
                 value="Change password"
                 class="btn"
@@ -118,29 +193,46 @@
     </section>
 
     <!--Start orders -->
-    <section class="orders container my-5 py-2">
+    <section id="orders" class="orders container my-5 py-2">
       <div class="container mt-2">
         <h2 class="font-weight-bold text-center">Your Orders</h2>
         <hr class="mx-auto" />
       </div>
       <table class="mt-5 pt-5">
         <tr>
-          <th>Product</th>
-          <th>Date</th>
+          <th>Order id</th>
+          <th>Order cost</th>
+          <th>Order status</th>
+          <th>Order Date</th>
+          <th>Order details</th>
         </tr>
-        <tr>
-          <td>
-            <div class="product-info">
-              <img src="assets/imgs/featured1.jpeg" alt="" />
-              <div>
-                <p class="mt-3">White Shoes</p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <span>2036-5-8</span>
-          </td>
-        </tr>
+
+    <?php while($row = $orders->fetch_assoc()) { ?>
+          <tr>
+              <td>
+                  <span><?php echo $row['order_id'];  ?> </span>
+              </td>
+
+              <td>
+                  <span> <?php echo $row['order_cost'];?> </span>
+              </td>
+
+              <td>
+                  <span> <?php echo $row['order_status'];?> </span>
+              </td>
+
+              <td>
+                  <span> <?php echo $row['order_date'];?> </span>
+              </td>
+
+              <td>
+                  <form>
+                      <input class="btn order-details-btn " type="submit" value="details">
+                  </form>
+              </td>
+
+          </tr>
+      <?php } ?>
       </table>
     </section>
     <!--End Orders-->
