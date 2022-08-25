@@ -16,7 +16,7 @@
 c'est un projet que j'ai conçu dans la formation développeur web et mobil à l' AFPA marseille . d'abord j'ai conçu la database avec La méthode MERISE (MCD,MPD) avant de commencer de coder en html, css, bootstrap,javascript,php et MySQL.
 
 <div align="center">
-    <img src="imgs/photo_diagram.jpg" width="400px"</img> 
+    <img src="imgs/photo_diagram.jpg" width="400px"/>
 </div>
 
 ### The challenge
@@ -45,7 +45,7 @@ il peut accéder toutes les productions et ajouter les article a son panier apre
 
 ### Ce que j'ai appris
 
-j'ai appris à analyser des besoins de projet,création de la base données.j'ai appris aussi à rendre un site responsive en utilisant bootstarp. en plus, j'ai bien maîtriser les langages de backend php et mysql
+j'ai appris à analyser des besoins de projet,création de la base données.j'ai appris aussi à rendre un site responsive en utilisant bootstrap. en plus, j'ai bien maîtriser les langages de backend php et mysql
 
 ### Continued development
 
