@@ -15,9 +15,7 @@
 
 c'est un projet que j'ai conçu dans la formation développeur web et mobil à l' AFPA marseille . d'abord j'ai conçu la database avec La méthode MERISE (MCD,MPD) avant de commencer de coder en html, css, bootstrap,javascript,php et MySQL.
 
-<div align="center">
-    <img src="imgs/photo_diagram.jpg" width="400px"/>
-</div>
+![My Image](imgs/photo_diagram.jpg)
 
 ### The challenge
 
